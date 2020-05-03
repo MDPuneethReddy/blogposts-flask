@@ -9,8 +9,8 @@ db = SQLAlchemy(app)
 class BlogPost(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     title = db.Column(db.String(100), nullable=False)
-    content = db.Column(db.Text, nullable=False)
     author = db.Column(db.String(20), nullable=False, default='N/A')
+    content = db.Column(db.Text, nullable=False)
     date_posted = db.Column(db.DateTime, nullable=False, default=datetime.utcnow)
 
     def __repr__(self):
@@ -25,9 +25,9 @@ def posts():
 
     if request.method == 'POST':
         post_title = request.form['title']
-        post_content = request.form['content']
         post_author = request.form['author']
-        new_post = BlogPost(title=post_title, content=post_content, author=post_author)
+        post_content = request.form['content']
+        new_post = BlogPost(title=post_title, author=post_author,content=post_content)
         db.session.add(new_post)
         db.session.commit()
         return redirect('/posts')
