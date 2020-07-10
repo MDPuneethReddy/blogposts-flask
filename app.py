@@ -12,7 +12,7 @@ class BlogPost(db.Model):
     author = db.Column(db.String(20), nullable=False, default='N/A')
     content = db.Column(db.Text, nullable=False)
     date_posted = db.Column(db.DateTime, nullable=False, default=datetime.utcnow)
-
+    #date=db.Column(db.String(20),nullable=False)
     def __repr__(self):
         return 'Blog post ' + str(self.id)
 
@@ -27,6 +27,7 @@ def posts():
         post_title = request.form['title']
         post_author = request.form['author']
         post_content = request.form['content']
+        #post_date=request.form['date']
         new_post = BlogPost(title=post_title, author=post_author,content=post_content)
         db.session.add(new_post)
         db.session.commit()
@@ -51,6 +52,7 @@ def edit(id):
         post.title = request.form['title']
         post.author = request.form['author']
         post.content = request.form['content']
+        #post.date=request.form['date']
         db.session.commit()
         return redirect('/posts')
     else:
